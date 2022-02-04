@@ -133,6 +133,13 @@ spec:
           - containerPort: 28092
           securityContext:
             allowPrivilegeEscalation: false
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 250m
+              memory: 128Mi
         - name: cortx-authserver
           image: {{ .Values.cortxserver.image }}
           imagePullPolicy: IfNotPresent
@@ -168,6 +175,13 @@ spec:
           - containerPort: 28050
           securityContext:
             allowPrivilegeEscalation: false
+          resources:
+            limits:
+              cpu: 500m
+              memory: 2048Mi
+            requests:
+              cpu: 250m
+              memory: 2048Mi
         {{- range $i := until (.Values.cortxserver.s3.numinst|int) }}
         - name: {{ printf "cortx-s3server-%03d" (add 1 $i) }}
           image: {{ $.Values.cortxserver.image }}
@@ -206,6 +220,13 @@ spec:
           - containerPort: {{ printf "%d" (add $i $.Values.cortxserver.s3.startportnum) }}
           securityContext:
             allowPrivilegeEscalation: false
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 4096Mi
+            requests:
+              cpu: 500m
+              memory: 2048Mi
         {{- end }}
         - name: cortx-hax
           image: {{ .Values.cortxserver.image }}
@@ -242,6 +263,13 @@ spec:
           - containerPort: 2001
           securityContext:
             allowPrivilegeEscalation: false
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 250m
+              memory: 128Mi
         - name: cortx-bgworker
           image: {{ .Values.cortxserver.image }}
           imagePullPolicy: IfNotPresent
@@ -275,5 +303,12 @@ spec:
               value: {{ .Values.cortxserver.name }}
           securityContext:
             allowPrivilegeEscalation: false
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 250m
+              memory: 128Mi
       nodeSelector:
         kubernetes.io/hostname: {{ .Values.cortxserver.nodeselector }}

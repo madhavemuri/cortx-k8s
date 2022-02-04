@@ -186,6 +186,13 @@ spec:
           - containerPort: 2001
           securityContext:
             allowPrivilegeEscalation: false
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 250m
+              memory: 128Mi
         - name: cortx-motr-confd
           image: {{ .Values.cortxdata.image }}
           imagePullPolicy: IfNotPresent
@@ -243,6 +250,13 @@ spec:
           - containerPort: {{ printf "%d" (add .Values.cortxdata.motr.numiosinst .Values.cortxdata.motr.startportnum) }}
           securityContext:
             allowPrivilegeEscalation: false
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 250m
+              memory: 128Mi
         {{- range $i := until (.Values.cortxdata.motr.numiosinst|int) }}
         - name: {{ printf "cortx-motr-io-%03d" (add 1 $i) }}
           image: {{ $.Values.cortxdata.image }}
@@ -303,6 +317,13 @@ spec:
           - containerPort: {{ printf "%d" (add $i $.Values.cortxdata.motr.startportnum) }}
           securityContext:
             allowPrivilegeEscalation: false
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 2048Mi
+            requests:
+              cpu: 2000m
+              memory: 2048Mi
         {{- end }}
       nodeSelector:
         kubernetes.io/hostname: {{ .Values.cortxdata.nodeselector }}

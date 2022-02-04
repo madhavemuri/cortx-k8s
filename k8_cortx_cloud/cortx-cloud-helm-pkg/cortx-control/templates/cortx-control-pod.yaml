@@ -190,6 +190,13 @@ spec:
               value: {{ .Values.cortxcontrol.name }}
           securityContext:
             allowPrivilegeEscalation: false
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 250m
+              memory: 128Mi
         - name: cortx-csm-agent
           image: {{ .Values.cortxcontrol.image }}
           imagePullPolicy: IfNotPresent
@@ -225,3 +232,10 @@ spec:
           - containerPort: 8081
           securityContext:
             allowPrivilegeEscalation: false
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 250m
+              memory: 128Mi
